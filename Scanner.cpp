@@ -11,6 +11,9 @@ Scanner::Scanner(int sCenterX, int sCenterY, HDC hdc = nullptr) {
 	_hdc = hdc;
 }
 
+/**
+	Simulates a left click down by using mouse events.
+*/
 void Scanner::LeftClickDown()
 {
 	input = { 0 };
@@ -20,6 +23,9 @@ void Scanner::LeftClickDown()
 	::SendInput(1, &input, sizeof(INPUT));
 }
 
+/**
+	Simulates left click up using mouse events.
+*/
 void Scanner::LeftClickUp()
 {
 	input = { 0 };
@@ -30,24 +36,6 @@ void Scanner::LeftClickUp()
 	::SendInput(1, &input, sizeof(INPUT));
 }
 
-void Scanner::RightClickDown()
-{
-	input = { 0 };
-	// right down 
-	input.type = INPUT_MOUSE;
-	input.mi.dwFlags = MOUSEEVENTF_RIGHTDOWN;
-	::SendInput(1, &input, sizeof(INPUT));
-}
-
-void Scanner::RightClickUp()
-{
-	input = { 0 };
-	// right up
-	::ZeroMemory(&input, sizeof(INPUT));
-	input.type = INPUT_MOUSE;
-	input.mi.dwFlags = MOUSEEVENTF_RIGHTUP;
-	::SendInput(1, &input, sizeof(INPUT));
-}
 
 /*Check the color at the middle of the screen, shoot if it's what we want, using
 	mouse events and reading the color of rgb values.
@@ -58,8 +46,11 @@ void Scanner::ScanReticle() {
 		/* Draw a simple blue rectangle on the desktop */
 		//getRGBavg(1255, 690, 1305, 750);
 		
-
-		// Draw a simple blue rectangle on the desktop 
+		/*
+		 Draw a simple blue rectangle on the desktop 
+		 This can be used for debugging purposes, or just to see
+		 where the calculated mid point of the window is...
+		*/
 		//HDC hdthing = GetDC(0);
 		//RECT rect = { 1250, 725, 1251, 726 };
 		//HBRUSH blueBrush = CreateSolidBrush(RGB(255, 0, 0));
@@ -94,6 +85,9 @@ void Scanner::ScanReticle() {
 }
 /*
 method for finding the average rgb values of the given range.
+Not really used for this program, but maybe could be used in
+some bitmapping solution. There is a better way to do this, but
+I will leave that implementation out of the public repo.
 */
 bool Scanner::getRGBavg(int startx, int endx) {
 	int r, g;
